@@ -1,6 +1,8 @@
 <%- include('partials/header.ejs') %>
 
 <main>
+    
+    <!-- Post Creation Card -->
     <div class="card ">
         <div class="card-header">
             <p class="mb-0">Creating your First Post:</p>
@@ -10,32 +12,8 @@
             <button type="button" class="btn btn-success w-100" data-bs-toggle="modal" data-bs-target="#modalCreatePost">Create a New Post!</button>
         </div>
     </div>
-    
-    <% if (locals.posts) { %>
-        <% posts.forEach(post => { %>
 
-            <div class="card">
-                <div class="card-header">
-                    <p class="mb-0">Post</p>
-                </div>
-
-                <div class="card-body">
-                    <h4 class="card-title"><%= post.postTitle %></h4>
-                    <p class="card-text"><%= post.postContent %></p>
-                </div>
-
-                <div class="card-footer">
-                    <input type="reset" class="btn btn-outline-danger" value="Delete Post">
-                    <input type="submit" class="btn btn-success" value="Edit Post">
-                </div>
-            </div>
-
-    <% }); %>
-    <% } else { %>
-        
-    <%} %>
-    
-    <!-- Modal -->
+    <!-- Creation Modal -->
     <div class="modal fade" id="modalCreatePost" tabindex="-1">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -46,25 +24,51 @@
                 </div>
 
                 <div class="modal-body">
-                <form action="/create" method="POST" id="postForm">
-                    
-                    <label for="postTitle" class="form-label">Post Title</label>
-                    <input type="text" name="postTitle" placeholder="Insert the Title of your Post" class="form-control">
-                    
-                    <label for="postContent" class="form-label">Post Content</label>
-                    <textarea name="postContent" form="postForm" class="form-control" placeholder="Write Here!"></textarea>
+                    <form action="/createPost" method="POST" id="postForm">
+                        
+                        <label for="postTitle" class="form-label">Post Title</label>
+                        <input type="text" name="postTitle" placeholder="Insert the Title of your Post" class="form-control">
+                        
+                        <label for="postContent" class="form-label">Post Content</label>
+                        <textarea name="postContent" form="postForm" class="form-control" placeholder="Write Here!"></textarea>
 
                 </div>
 
                 <div class="modal-footer">
-                <input type="reset" class="btn btn-outline-danger" value="Clear">
-                <input type="submit" class="btn btn-success" value="Post" data-bs-dismiss="modal">
-                </form>
+                        <input type="reset" class="btn btn-outline-danger" value="Clear">
+                        <input type="submit" class="btn btn-success" value="Post" data-bs-dismiss="modal">
+                    </form>
                 </div>
                 
             </div>
         </div>
     </div>
+
+    <!-- Post Card -->
+    <% if (locals.posts){  %>
+        <% posts.forEach(post => { %>
+            <div class="card">
+                <div class="card-header">
+                    <p class="mb-0">Post <%= posts.indexOf(post) + 1%></p>
+                    <p>Posted at: <%= post.postDate%></p>
+                </div>
+
+                <div class="card-body mb-0">
+                    <h4 class="card-title"><%= post.postTitle %></h4>
+                    <p class="card-text"><%= post.postContent %></p>
+                </div>
+
+                <div class="card-footer">
+                    <form action="/delete" method="POST">
+                        <input type="hidden" name="postIndex" value="<%= posts.indexOf(post) %>">
+                        <input type="submit" class="btn btn-outline-danger" value="Delete Post">
+                    </form>
+
+                    <button type="button" class="btn btn-success w-100" data-bs-toggle="modal" data-bs-target="#modalEditPost">Edit</button>
+                </div>
+            </div>
+        <% }); %>
+    <% } %>
 
 </main>
 
