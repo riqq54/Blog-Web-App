@@ -1,0 +1,43 @@
+<%- include('partials/header.ejs') %>
+
+<main>
+        <div class="card">
+            <div class="card-header">
+                <p class="mb-0">Creating your First Post:</p>
+            </div>
+            <div class="card-body text-center">
+                <h4 class="card-title">Click on the button to post something!</h4>
+                <button type="button" class="btn btn-success w-100" data-bs-toggle="modal" data-bs-target="#modalCreatePost">Create a New Post!</button>
+            </div>
+        </div>
+
+        <div class="modal fade" id="modalCreatePost" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+
+                  <div class="modal-header">
+                    <h5 class="modal-title">Creating Post</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+
+                  <div class="modal-body">
+                    <form action="/create" method="POST">
+
+                        <input type="text" name="postTitle">
+                        <input type="text" name="postContent">
+
+                  </div>
+
+                  <div class="modal-footer">
+                    <input type="reset" class="btn btn-outline-danger" value="Clear">
+                    <input type="submit" class="btn btn-success" value="Post">
+                    </form>
+                  </div>
+                  
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+<%- include('partials/footer.ejs') %>
