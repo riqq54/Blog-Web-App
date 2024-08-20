@@ -32,7 +32,7 @@ app.post("/createPost", (req, res) => {
 
     posts.push(post);
 
-    console.log(posts);
+    // console.log(posts);
     res.redirect("/");
 });
 
@@ -44,14 +44,18 @@ app.post("/delete", (req, res)=>{
     res.redirect("/");
 })
 
-// app.post("/editPost", (req, res)=>{
+//Rewriting the Post Object on array position
+app.post("/edit", (req ,res) =>{
 
-//     console.log(req.body.postIndex);
-//     posts[req.body.postIndex].postTitle = req.body.postTitle;
-//     posts[req.body.postIndex].postContent = req.body.postContent;
+    console.log(req.body);
 
-//     res.redirect("/");
-// })
+    posts[req.body.postIndex] = new Post(req.body.postTitle, req.body.postContent);
+
+    console.log(posts);
+
+    res.redirect("/");
+})
+
 
 //Set Server
 app.listen(port, ()=>{

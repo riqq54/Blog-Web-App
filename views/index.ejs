@@ -1,74 +1,104 @@
 <%- include('partials/header.ejs') %>
 
 <main>
-    
-    <!-- Post Creation Card -->
-    <div class="card ">
-        <div class="card-header">
-            <p class="mb-0">Creating your First Post:</p>
-        </div>
-        <div class="card-body text-center">
-            <h4 class="card-title">Click on the button to post something!</h4>
-            <button type="button" class="btn btn-success w-100" data-bs-toggle="modal" data-bs-target="#modalCreatePost">Create a New Post!</button>
-        </div>
+
+<!-- Post Creation Card -->
+<div class="card ">
+    <div class="card-header">
+        <p class="mb-0">Creating your First Post:</p>
     </div>
+    <div class="card-body text-center">
+        <h4 class="card-title">Click on the button to post something!</h4>
+        <button type="button" class="btn btn-success w-100" data-bs-toggle="modal" data-bs-target="#modalCreatePost">Create a New Post!</button>
+    </div>
+</div>
 
-    <!-- Creation Modal -->
-    <div class="modal fade" id="modalCreatePost" tabindex="-1">
-        <div class="modal-dialog">
-            <div class="modal-content">
+<!-- Creation Modal -->
+<div class="modal fade" id="modalCreatePost" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
 
-                <div class="modal-header">
+            <div class="modal-header">
                 <h5 class="modal-title">Creating Post</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-
-                <div class="modal-body">
-                    <form action="/createPost" method="POST" id="postForm">
-                        
-                        <label for="postTitle" class="form-label">Post Title</label>
-                        <input type="text" name="postTitle" placeholder="Insert the Title of your Post" class="form-control">
-                        
-                        <label for="postContent" class="form-label">Post Content</label>
-                        <textarea name="postContent" form="postForm" class="form-control" placeholder="Write Here!"></textarea>
-
-                </div>
-
-                <div class="modal-footer">
-                        <input type="reset" class="btn btn-outline-danger" value="Clear">
-                        <input type="submit" class="btn btn-success" value="Post" data-bs-dismiss="modal">
-                    </form>
-                </div>
-                
             </div>
+
+            <div class="modal-body">
+                <form action="/createPost" method="POST" id="postForm">
+                    
+                    <label for="postTitle" class="form-label">Post Title</label>
+                    <input type="text" name="postTitle" placeholder="Insert the Title of your Post" class="form-control">
+                    
+                    <label for="postContent" class="form-label">Post Content</label>
+                    <textarea name="postContent" form="postForm" class="form-control" placeholder="Write Here!"></textarea>
+
+            </div>
+
+            <div class="modal-footer">
+                    <button type="reset" class="btn btn-outline-danger ms-auto" value="Clear"><i class="fa-solid fa-trash-can"></i></button>
+                    <button type="submit" class="btn btn-outline-success ms-3" value="Post" data-bs-dismiss="modal"><i class="fa-solid fa-check"></i></button>
+                </form>
+            </div>
+            
         </div>
     </div>
+</div>
 
-    <!-- Post Card -->
-    <% if (locals.posts){  %>
-        <% posts.forEach(post => { %>
-            <div class="card">
-                <div class="card-header">
-                    <p class="mb-0">Post <%= posts.indexOf(post) + 1%></p>
-                    <p>Posted at: <%= post.postDate%></p>
-                </div>
+<!-- Post Card -->
+<% if (locals.posts){  %>
+    <% posts.forEach(post => { %>
+        <div class="card">
+            <div class="card-header">
+                <p class="mb-0">Post <%= posts.indexOf(post) + 1%></p>
+                <p>Posted at: <%= post.postDate%></p>
+            </div>
 
-                <div class="card-body mb-0">
-                    <h4 class="card-title"><%= post.postTitle %></h4>
-                    <p class="card-text"><%= post.postContent %></p>
-                </div>
+            <div class="card-body mb-0">
+                <h4 class="card-title"><%= post.postTitle %></h4>
+                <p class="card-text"><%= post.postContent %></p>
+            </div>
 
-                <div class="card-footer">
-                    <form action="/delete" method="POST">
-                        <input type="hidden" name="postIndex" value="<%= posts.indexOf(post) %>">
-                        <input type="submit" class="btn btn-outline-danger" value="Delete Post">
-                    </form>
+            <div class="card-footer d-flex ">
+                <form action="/delete" method="POST">
+                    <input type="hidden" name="postIndex" value="<%= posts.indexOf(post) %>">
+                    <button type="submit" class="btn btn-outline-danger ms-auto" ><i class="fa-solid fa-trash-can"></i></button>
+                </form>
+                    <button type="button" class="btn btn-outline-success ms-3" data-bs-toggle="modal" data-bs-target="#modalEditPost<%= posts.indexOf(post) %>"><i class="fa-solid fa-pencil"></i></button>
+        </div>
 
-                    <button type="button" class="btn btn-success w-100" data-bs-toggle="modal" data-bs-target="#modalEditPost">Edit</button>
+        <!-- Editing Modal -->
+        <div class="modal fade" id="modalEditPost<%= posts.indexOf(post) %>" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+
+                    <div class="modal-header">
+                        <h5 class="modal-title">Editing Post</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+
+                    <div class="modal-body">
+                        <form action="/edit" method="POST" id="editForm<%= posts.indexOf(post) %>">
+                            
+                            <label for="postTitle" class="form-label">Post Title</label>
+                            <input type="text" name="postTitle" value="<%= post.postTitle %>" class="form-control">
+                            
+                            <label for="postContent" class="form-label">Post Content</label>
+                            <textarea name="postContent" form="editForm<%= posts.indexOf(post) %>" class="form-control"><%= post.postContent %></textarea>
+
+                    </div>
+
+                    <div class="modal-footer">
+                            <button type="reset" class="btn btn-outline-danger ms-auto" value="Clear"><i class="fa-solid fa-trash-can"></i></button>
+                            <input type="hidden" name="postIndex" value="<%= posts.indexOf(post) %>">
+                            <button type="submit" class="btn btn-outline-success ms-3" value="Post" data-bs-dismiss="modal"><i class="fa-solid fa-check"></i></button>
+                        </form>
+                    </div>
+                    
                 </div>
             </div>
-        <% }); %>
-    <% } %>
+        </div>
+    <% }); %>
+<% } %>
 
 </main>
 
