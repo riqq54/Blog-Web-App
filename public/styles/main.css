@@ -1,26 +1,21 @@
-main{
-    display: flex;
-    flex-direction: column;
-    gap: 30px;
-    justify-content: center;
-    align-items: center;
-    padding: 50px;
-    background-color: #333;
+html{
     height: 100%;
 }
 
-.card{
-    width: 100vh;
+body{
+    height: 100%;
 }
 
-.card-body{
-    display: flex;
-    flex-direction: column;
-    gap: 50px;
-    justify-content: center;
-    height: 10rem;
+main{
+    background-color: #333;
+    align-content: center;
 }
 
 footer{
-    background-color: #f8f9fa;
+    align-content: center;
+    height: 150px;
+}
+
+.container{
+    min-height: 520px;
 }

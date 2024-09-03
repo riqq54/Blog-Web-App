@@ -16,7 +16,7 @@ class Post {
     constructor(postTitle, postContent) {
         this.postTitle = postTitle;
         this.postContent = postContent;
-        this.postDate = new Date();
+        this.postDate = new Date().toLocaleString();
     }
 }
 
