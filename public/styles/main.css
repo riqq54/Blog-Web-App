@@ -13,9 +13,18 @@ main{
 
 footer{
     align-content: center;
-    height: 150px;
+    min-height: 150px;
 }
 
 .container{
     min-height: 520px;
+}
+
+a {
+    text-decoration: none;
+    color: #198754;
+}
+
+a:hover{
+    color: #157347
 }
