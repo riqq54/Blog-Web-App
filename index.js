@@ -25,6 +25,10 @@ app.get("/", (req, res)=>{
     res.render("index.ejs", {posts});
 })
 
+app.get("/about", (req,res)=>{
+    res.render("about.ejs");
+})
+
 //Creating a Post Object and storing it in array posts[]
 app.post("/createPost", (req, res) => {
 
